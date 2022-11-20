@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: feature-toggle
+  name: feature-toggle
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: feature-toggle
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: feature-toggle
+    spec:
+      containers:
+      - image: jonasd/feature-toggle:1.0.0
+        name: feature-toggle
+        resources: {}
+status: {}
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: feature-toggle
+  name: feature-toggle
+spec:
+  ports:
+  - name: 8080-8080
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: feature-toggle
+  type: ClusterIP
+status:
+  loadBalancer: {}
